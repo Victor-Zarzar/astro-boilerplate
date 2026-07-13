@@ -9,13 +9,26 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
+    "clean": "rm -rf dist node_modules .astro",
+    "update": "pnpm up",
+    "update-latest": "pnpm up --latest",
+    "approve-builds": "pnpm approve-builds"
   },
   "dependencies": {
     "@astrojs/mdx": "^7.0.2",
+    "@astrojs/preact": "^6.0.1",
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.3",
     "astro": "^7.0.7",
+    "astro-compress": "^2.4.1",
     "sharp": "^0.35.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.3",
+    "slugify": "^1.6.9"
   }
 }
