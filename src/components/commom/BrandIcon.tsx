@@ -1,11 +1,17 @@
-import type { SVGProps } from 'react';
+import type { SVGProps } from "react";
 
 /**
  * BrandIcon Component (TypeScript version)
  * Used in React islands to provide consistent brand icons without lucide-react brand icons.
  */
 
-type IconType = 'github' | 'facebook' | 'linkedin' | 'youtube' | 'twitter' | 'x';
+type IconType =
+  | "github"
+  | "facebook"
+  | "linkedin"
+  | "youtube"
+  | "twitter"
+  | "x";
 
 interface BrandIconProps extends SVGProps<SVGSVGElement> {
   icon: IconType | string;
@@ -18,7 +24,10 @@ export default function BrandIcon({
   strokeWidth = 1.5,
   ...props
 }: BrandIconProps) {
-  const icons: Record<string, { path: React.ReactNode; fill: string; stroke: string }> = {
+  const icons: Record<
+    string,
+    { path: React.ReactNode; fill: string; stroke: string }
+  > = {
     github: {
       path: (
         <>
@@ -26,13 +35,15 @@ export default function BrandIcon({
           <path d="M9 18c-4.51 2-5-2-7-2" />
         </>
       ),
-      fill: 'none',
-      stroke: 'currentColor'
+      fill: "none",
+      stroke: "currentColor",
     },
     facebook: {
-      path: <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />,
-      fill: 'none',
-      stroke: 'currentColor'
+      path: (
+        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+      ),
+      fill: "none",
+      stroke: "currentColor",
     },
     linkedin: {
       path: (
@@ -42,8 +53,8 @@ export default function BrandIcon({
           <circle cx="4" cy="4" r="2" />
         </>
       ),
-      fill: 'none',
-      stroke: 'currentColor'
+      fill: "none",
+      stroke: "currentColor",
     },
     youtube: {
       path: (
@@ -52,19 +63,23 @@ export default function BrandIcon({
           <path d="m10 15 5-3-5-3z" />
         </>
       ),
-      fill: 'none',
-      stroke: 'currentColor'
+      fill: "none",
+      stroke: "currentColor",
     },
     twitter: {
-      path: <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />,
-      fill: 'currentColor',
-      stroke: 'none'
+      path: (
+        <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />
+      ),
+      fill: "currentColor",
+      stroke: "none",
     },
     x: {
-      path: <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />,
-      fill: 'currentColor',
-      stroke: 'none'
-    }
+      path: (
+        <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />
+      ),
+      fill: "currentColor",
+      stroke: "none",
+    },
   };
 
   const currentIcon = icons[icon.toLowerCase()];
@@ -76,7 +91,7 @@ export default function BrandIcon({
       viewBox="0 0 24 24"
       fill={currentIcon.fill}
       stroke={currentIcon.stroke}
-      strokeWidth={currentIcon.stroke === 'none' ? 0 : strokeWidth}
+      strokeWidth={currentIcon.stroke === "none" ? 0 : strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"
       className={className}

@@ -7,8 +7,8 @@ const { lang = defaultLang } = Astro.params;
 const t = useTranslations(lang);
 
 const positionClasses = isRtl(lang)
-    ? "md:right-6 md:left-auto" // RTL: Right
-    : "md:left-6 md:right-auto"; // LTR: Left
+  ? "md:right-6 md:left-auto" // RTL: Right
+  : "md:left-6 md:right-auto"; // LTR: Left
 ---
 
 <div
