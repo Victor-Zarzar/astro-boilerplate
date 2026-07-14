@@ -1,96 +1,235 @@
 ---
 import { Image } from "astro:assets";
-import type { CollectionEntry } from "astro:content";
-import BaseHead from "../components/BaseHead.astro";
-import Footer from "../components/Footer.astro";
-import FormattedDate from "../components/FormattedDate.astro";
-import Header from "../components/Header.astro";
+import { getEntry } from "astro:content";
+import type { ImageMetadata } from "astro";
+import AuthorDetails from "~/components/blog/AuthorDetails.astro";
+import AudioPlayer from "~/components/common/AudioPlayer.astro";
+import ScrollProgress from "~/components/layout/ScrollProgress.astro";
+import Badge from "~/components/ui/Badge.astro";
+import { defaultLang } from "~/i18n/ui";
+import { isRtl, useTranslations } from "~/i18n/utils";
+import Layout from "./Layout.astro";
 
-type Props = CollectionEntry<"blog">["data"];
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  author?: any;
+  tags?: string[];
+  youtubeId?: string;
+  audioUrl?: string;
+  isVideo?: boolean;
+  heroImage?: ImageMetadata;
+  heroImageAlt?: string;
+  children?: any;
+  noindex?: boolean;
+  nofollow?: boolean;
+  availableLangs?: string[];
+}
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  heroImage,
+  heroImageAlt,
+  youtubeId,
+  audioUrl,
+  isVideo,
+  noindex,
+  nofollow,
+  availableLangs,
+  author,
+  tags,
+} = Astro.props;
+const { lang = defaultLang } = Astro.params;
+const t = useTranslations(lang);
+
+// Resolve author with i18n fallback
+let authorEntry = null;
+if (author) {
+  // Try to find author in current language
+  authorEntry = await getEntry("authors", `${lang}/${author}`);
+
+  // Fallback to default language if not found
+  if (!authorEntry && lang !== defaultLang) {
+    authorEntry = await getEntry("authors", `${defaultLang}/${author}`);
+  }
+}
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: title,
+  description: description,
+  datePublished: pubDate.toISOString(),
+  ...(updatedDate && { dateModified: updatedDate.toISOString() }),
+  ...(heroImage && { image: new URL(heroImage.src, Astro.site).toString() }),
+  author: {
+    "@type": "Person",
+    name: authorEntry ? authorEntry.data.name : "Cooper Team",
+    url: Astro.site?.toString() || "",
+  },
+};
 ---
 
-<html lang="en">
-    <head>
-        <BaseHead title={title} description={description} />
-        <style>
-            main {
-                width: calc(100% - 2em);
-                max-width: 100%;
-                margin: 0;
-            }
-            .hero-image {
-                width: 100%;
-            }
-            .hero-image img {
-                display: block;
-                margin: 0 auto;
-                border-radius: 12px;
-                box-shadow: var(--box-shadow);
-            }
-            .prose {
-                width: 720px;
-                max-width: calc(100% - 2em);
-                margin: auto;
-                padding: 1em;
-                color: rgb(var(--gray-dark));
-            }
-            .title {
-                margin-bottom: 1em;
-                padding: 1em 0;
-                text-align: center;
-                line-height: 1;
-            }
-            .title h1 {
-                margin: 0 0 0.5em 0;
-            }
-            .date {
-                margin-bottom: 0.5em;
-                color: rgb(var(--gray));
-            }
-            .last-updated-on {
-                font-style: italic;
-            }
-        </style>
-    </head>
+<script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(schema)}
+    slot="head"
+/>
 
-    <body>
-        <Header />
-        <main>
-            <article>
-                <div class="hero-image">
-                    {
-                        heroImage && (
-                            <Image
-                                width={1020}
-                                height={510}
-                                src={heroImage}
-                                alt=""
-                            />
-                        )
-                    }
-                </div>
-                <div class="prose">
-                    <div class="title">
-                        <div class="date">
-                            <FormattedDate date={pubDate} />
-                            {
-                                updatedDate && (
-                                    <div class="last-updated-on">
-                                        Last updated on{" "}
-                                        <FormattedDate date={updatedDate} />
-                                    </div>
-                                )
-                            }
-                        </div>
-                        <h1>{title}</h1>
-                        <hr />
+<Layout
+    title={title}
+    description={description}
+    image={heroImage?.src}
+    imageWidth={heroImage?.width}
+    imageHeight={heroImage?.height}
+    imageAlt={heroImageAlt || title}
+    article={true}
+    noindex={noindex}
+    nofollow={nofollow}
+    availableLangs={availableLangs}
+>
+    <ScrollProgress />
+    <article class="max-w-4xl mx-auto px-6 pt-40 pb-20">
+        <div class="mb-8">
+            <a
+                href={`/${lang}/blog`}
+                class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class={`w-4 h-4 ${isRtl(lang) ? "rotate-180" : ""}`}
+                    ><path d="m15 18-6-6 6-6"></path></svg
+                >
+                {t["blog.back"]}
+            </a>
+        </div>
+
+        <div class="mb-12 text-center">
+            {
+                heroImage && !youtubeId && (
+                    <div class="rounded-2xl overflow-hidden mb-8 border border-black/10 dark:border-white/10 shadow-2xl">
+                        <Image
+                            src={heroImage}
+                            alt={heroImageAlt || title}
+                            class="w-full object-cover aspect-video"
+                        />
                     </div>
-                    <slot />
-                </div>
-            </article>
-        </main>
-        <Footer />
-    </body>
-</html>
+                )
+            }
+
+            {
+                youtubeId && (
+                    <div class="rounded-2xl overflow-hidden mb-8 border border-black/10 dark:border-white/10 shadow-2xl aspect-video bg-black">
+                        <iframe
+                            width="100%"
+                            height="100%"
+                            src={`https://www.youtube.com/embed/${youtubeId}`}
+                            title="YouTube video player"
+                            style="border: 0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen
+                        />
+                    </div>
+                )
+            }
+
+            {
+                audioUrl && (
+                    <div class="mb-8 overflow-hidden rounded-xl shadow-lg border border-black/5 dark:border-white/10">
+                        <AudioPlayer src={audioUrl} title={title} />
+                    </div>
+                )
+            }
+
+            <div
+                class="flex items-center justify-center gap-4 text-muted-foreground mb-4"
+            >
+                {
+                    isVideo && (
+                        <span class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest rounded-md bg-red-500/10 text-red-700 dark:text-red-400 border border-red-500/20">
+                            {t["blog.videoContent"]}
+                        </span>
+                    )
+                }
+                <time
+                    >{
+                        pubDate.toLocaleDateString(lang, {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                        })
+                    }</time
+                >
+                {
+                    updatedDate && (
+                        <div class="italic">
+                            ({t["blog.updatedOn"]}{" "}
+                            {updatedDate.toLocaleDateString(lang, {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                            })}
+                            )
+                        </div>
+                    )
+                }
+            </div>
+
+            <h1
+                class="text-4xl md:text-6xl font-display font-bold mb-6 bg-linear-to-br from-zinc-900 via-zinc-900 to-zinc-600 dark:from-white dark:via-white dark:to-white bg-clip-text text-transparent"
+            >
+                {title}
+            </h1>
+            <p class="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
+                {description}
+            </p>
+
+            {
+                tags && tags.length > 0 && (
+                    <div class="flex flex-wrap justify-center gap-2 mb-8">
+                        {tags.map((tag) => {
+                            const tagSlug = tag
+                                .toLowerCase()
+                                .replace(/[^a-z0-9]+/g, "-")
+                                .replace(/(^-|-$)/g, "");
+                            return (
+                                <a href={`/${lang}/blog/tag/${tagSlug}`}>
+                                    <Badge
+                                        variant="outline"
+                                        class="hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer"
+                                    >
+                                        {tag}
+                                    </Badge>
+                                </a>
+                            );
+                        })}
+                    </div>
+                )
+            }
+
+            <hr class="border-black/10 dark:border-white/10" />
+        </div>
+
+        <div
+            class="prose prose-lg mx-auto prose-img:rounded-xl prose-headings:font-display prose-headings:font-bold prose-a:text-primary hover:prose-a:text-primary/80 dark:prose-invert"
+        >
+            <slot />
+        </div>
+
+        {authorEntry && <AuthorDetails author={authorEntry} />}
+    </article>
+</Layout>
