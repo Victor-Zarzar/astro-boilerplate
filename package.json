@@ -8,12 +8,20 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "start": "astro dev",
     "build": "astro build",
+    "build:vercel": "cross-env ADAPTER=vercel astro build",
+    "build:netlify": "cross-env ADAPTER=netlify astro build",
+    "build:cloudflare": "cross-env ADAPTER=cloudflare astro build",
     "preview": "astro preview",
-    "astro": "astro",
+    "deploy": "pnpm build:cloudflare && wrangler deploy",
     "lint": "eslint .",
     "format": "prettier --write \"**/*.{ts,tsx,astro}\"",
-    "typecheck": "astro check"
+    "typecheck": "astro check",
+    "clean": "rm -rf dist node_modules .astro",
+    "update": "pnpm up",
+    "update-latest": "pnpm up --latest",
+    "approve-builds": "pnpm approve-builds"
   },
   "dependencies": {
     "@astrojs/react": "^5",
