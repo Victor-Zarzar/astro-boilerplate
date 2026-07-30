@@ -4,3 +4,6 @@ allowBuilds:
   esbuild: true
   sharp: true
   msw: false
+
+minimumReleaseAgeExclude:
+  - lucide-react@1.28.0
