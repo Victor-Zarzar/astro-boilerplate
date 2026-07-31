@@ -1,17 +1,43 @@
 ---
-import Layout from "@/layouts/main.astro"
-import { Button } from "@/components/ui/button"
+import Base from "@/layouts/Base.astro"
+
+export const prerender = false
+
+const title = "海棠诗社"
+const meta_title = "海棠诗社"
+const description =
+  "海棠诗社，古诗词的数字桃源。" +
+  "海棠诗社按诗集、朝代、诗人、诗词等方式检索，内容丰富，信息齐全。" +
+  "海棠诗社按选集、主题、节日、节气、词牌、时令、地理等方式精选分类。" +
+  "海棠诗社全站响应式布局，兼容移动端，支持暗黑模式，响应速度快。"
 ---
 
-<Layout>
-  <div class="flex min-h-svh p-6">
-    <div class="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-      <div>
-        <h1 class="font-medium">Project ready!</h1>
-        <p>You may now add components and start building.</p>
-        <p>We've already added the button component for you.</p>
-        <Button client:load className="mt-2">Button</Button>
-      </div>
+<Base title={title} meta_title={meta_title} description={description}>
+  <!-- Hero Section -->
+  <section id="index-section" class="section py-14">
+    <div class="container">
+      <div>HI</div>
     </div>
-  </div>
-</Layout>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features-section" class="section py-28">
+    <div class="container">
+      <div>HI</div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section id="testimonials-section" class="section py-28">
+    <div class="container">
+      <div>HI</div>
+    </div>
+  </section>
+
+  <!-- CallToAction Section -->
+  <section id="cta-section" class="section mb-14 py-14">
+    <div class="container">
+      <div>HI</div>
+    </div>
+  </section>
+</Base>
