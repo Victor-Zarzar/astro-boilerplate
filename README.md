@@ -34,4 +34,5 @@ import { Button } from "@/components/ui/button"
   </body>
 </html>
 ```
+
 # astro-boilerplate

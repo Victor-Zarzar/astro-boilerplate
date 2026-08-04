@@ -1,6 +1,6 @@
 const getUI = () => {
   const _default = {
-    theme: 'system',
+    theme: "system",
     classes: {},
     tokens: {},
   };

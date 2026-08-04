@@ -4,10 +4,10 @@
 import "sst";
 
 declare module "sst" {
-	export interface Resource {
-		hoiTangStack: {
-			type: "sst.aws.Astro";
-			url: string;
-		};
-	}
+  export interface Resource {
+    hoiTangStack: {
+      type: "sst.aws.Astro";
+      url: string;
+    };
+  }
 }
