@@ -1,0 +1,58 @@
+---
+import Base from "@/layouts/Base.astro";
+import { getLang } from "@/utils/i18n";
+
+const lang = getLang(Astro.url.pathname);
+
+const text = {
+  en: {
+    title: "Internal Server Error",
+    header: "500 Internal Server Error",
+    description:
+      "The page you are seeing means that something went wrong on server side. Please try again later.",
+    buttonText: "Back to home",
+  },
+  pt: {
+    title: "Erreur Interne du Serveur",
+    header: "500 Erreur Interne du Serveur",
+    description:
+      "La page que vous voyez signifie qu'une erreur s'est produite côté serveur. Veuillez réessayer plus tard.",
+    buttonText: "Retour à l'accueil",
+  },
+
+  es: {
+    title: "Error Interno del Servidor",
+    header: "500 Error Interno del Servidor",
+    description:
+      "La página que está viendo significa que algo salió mal en el lado del servidor. Por favor, inténtelo de nuevo más tarde.",
+    buttonText: "Volver al inicio",
+  },
+};
+
+const content = text[lang] || text.en; // Fallback to English if translation not available
+---
+
+<Base title={content.title}>
+    <section class="section-sm text-center">
+        <div class="container">
+            <div class="row justify-center">
+                <div class="sm:col-10 md:col-8 lg:col-6">
+                    <span
+                        class="text-[8rem] block font-bold text-dark dark:text-darkmode-dark"
+                    >
+                        500
+                    </span>
+                    <h1 class="h2 mb-4">{content.header}</h1>
+                    <div class="content">
+                        <p>
+                            {content.description}
+                        </p>
+                    </div>
+                    <a href="/" class="btn btn-primary mt-8"
+                        >{content.buttonText}</a
+                    >
+                </div>
+            </div>
+        </div>
+    </section>
+</Base>

@@ -1,33 +1,66 @@
 ---
-import "@/styles/global.css";
-
 import TwSizeIndicator from "@/components/TwSizeIndicator.astro";
+import { Toaster } from "@/components/ui/sonner";
+import { footerConfig } from "@/config/FooterConfig";
+import { headerConfig } from "@/config/HeaderConfig";
+import BaseHead from "@/layouts/components/BaseHead.astro";
+import Footer from "@/layouts/components/Footer.astro";
+import Header from "@/layouts/components/Header.astro";
 import { getLang } from "@/utils/i18n";
 
 // types for frontmatters
 export interface Props {
-  title?: string;
-  meta_title?: string;
-  description?: string;
-  image?: string;
-  noindex?: boolean;
-  canonical?: string;
+    title?: string;
+    meta_title?: string;
+    description?: string;
+    image?: string;
+    noindex?: boolean;
+    canonical?: string;
 }
 
 // destructure frontmatters
 const { title, meta_title, description, image, noindex, canonical } =
-  Astro.props;
+    Astro.props;
 
 const locale = getLang(Astro.url.pathname as any);
 ---
 
 <!doctype html>
 <html lang={locale}>
-  <head> </head><p>HI, TESTER!</p>
+    <head>
+        <BaseHead
+            title={title}
+            meta_title={meta_title}
+            description={description}
+            image={image}
+            noindex={noindex}
+            canonical={canonical}
+        />
+    </head>
+    <body>
+        <TwSizeIndicator />
 
-  <body>
-    <TwSizeIndicator />
-  </body>
+        <Header
+            isSticky
+            showSearch={false}
+            showToggleTheme
+            showTwitter
+            showGithub
+            showLanguageSwitcher
+            {...headerConfig}
+        />
 
+        <main id="main-content">
+            <slot />
+        </main>
 
+        <Footer {...footerConfig} />
+
+        <Toaster
+            className="mt-14"
+            position="top-right"
+            richColors
+            client:load
+        />
+    </body>
 </html>
