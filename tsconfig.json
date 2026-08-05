@@ -2,8 +2,9 @@
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     "target": "es6",
-    "allowJs": true,
     "strict": true,
+    "strictNullChecks": true,
+    "allowJs": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "jsx": "react",
