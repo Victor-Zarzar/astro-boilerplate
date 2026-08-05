@@ -1,0 +1,44 @@
+---
+import { getEntry } from "astro:content";
+import { Icon } from "astro-icon/components";
+import { getLang } from "@/utils/i18n";
+
+const features = await getEntry("sections", "features");
+const lang = getLang(Astro.url.pathname);
+---
+
+{
+    features.data.enable && (
+        <div>
+            {/* cabeçalho da seção */}
+            <div class="mx-auto max-w-2xl text-center">
+                <h2 class="text-2xl md:text-3xl lg:text-4xl lg:tracking-tight">
+                    {features.data[lang].title}
+                </h2>
+                <p class="text-lg mt-4 text-dark/70 dark:text-darkmode-dark/70">
+                    {features.data[lang].subtitle}
+                </p>
+            </div>
+
+            {/* grid de itens */}
+            <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {features.data.items.map((item) => (
+                    <div class="relative rounded-2xl border border-dark/10 bg-white p-6 transition duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-darkmode-dark/10 dark:bg-darkmode-body">
+                        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+                            <Icon
+                                name={item.icon}
+                                class="h-6 w-6 text-primary"
+                            />
+                        </div>
+                        <h3 class="mt-5 text-lg font-semibold text-dark dark:text-darkmode-dark">
+                            {item[lang].title}
+                        </h3>
+                        <p class="mt-2 text-dark/70 dark:text-darkmode-dark/70">
+                            {item[lang].description}
+                        </p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    )
+}

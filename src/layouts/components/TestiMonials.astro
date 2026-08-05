@@ -1,0 +1,54 @@
+---
+import { Image } from "astro:assets";
+import { getEntry } from "astro:content";
+import { getLang } from "@/utils/i18n";
+
+const testimonials = await getEntry("sections", "testimonials");
+const lang = getLang(Astro.url.pathname);
+---
+
+{
+    testimonials.data.enable && (
+        <div>
+            {/* cabeçalho da seção */}
+            <div class="mx-auto max-w-2xl text-center">
+                <h2 class="text-2xl md:text-3xl lg:text-4xl lg:tracking-tight">
+                    {testimonials.data[lang].title}
+                </h2>
+                <p class="text-lg mt-4 text-dark/70 dark:text-darkmode-dark/70">
+                    {testimonials.data[lang].subtitle}
+                </p>
+            </div>
+
+            {/* grid de depoimentos */}
+            <div class="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {testimonials.data.items.map((item) => (
+                    <figure class="flex h-full flex-col justify-between rounded-2xl border border-dark/10 bg-white p-6 dark:border-darkmode-dark/10 dark:bg-darkmode-body">
+                        <blockquote class="text-dark/80 dark:text-darkmode-dark/80">
+                            “{item[lang].quote}”
+                        </blockquote>
+                        <figcaption class="mt-6 flex items-center gap-3">
+                            {item.avatar && (
+                                <Image
+                                    src={item.avatar}
+                                    alt={item.name}
+                                    width={44}
+                                    height={44}
+                                    class="h-11 w-11 rounded-full object-cover"
+                                />
+                            )}
+                            <div>
+                                <div class="font-semibold text-dark dark:text-darkmode-dark">
+                                    {item.name}
+                                </div>
+                                <div class="text-sm text-dark/60 dark:text-darkmode-dark/60">
+                                    {item[lang].role}
+                                </div>
+                            </div>
+                        </figcaption>
+                    </figure>
+                ))}
+            </div>
+        </div>
+    )
+}

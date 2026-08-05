@@ -10,17 +10,17 @@ import { getLang } from "@/utils/i18n";
 
 // types for frontmatters
 export interface Props {
-    title?: string;
-    meta_title?: string;
-    description?: string;
-    image?: string;
-    noindex?: boolean;
-    canonical?: string;
+  title?: string;
+  meta_title?: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+  canonical?: string;
 }
 
 // destructure frontmatters
 const { title, meta_title, description, image, noindex, canonical } =
-    Astro.props;
+  Astro.props;
 
 const locale = getLang(Astro.url.pathname as any);
 ---

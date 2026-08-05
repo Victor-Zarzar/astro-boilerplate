@@ -3,24 +3,24 @@ import type { HeaderConfigProps } from "@/config/HeaderConfig";
 import { getLang, localeLabels, locales, switchLocalePath } from "@/utils/i18n";
 
 export interface Props extends HeaderConfigProps {
-    isSticky?: boolean;
-    showSearch?: boolean;
-    showToggleTheme?: boolean;
-    showTwitter?: boolean;
-    showGithub?: boolean;
-    showLanguageSwitcher?: boolean;
+  isSticky?: boolean;
+  showSearch?: boolean;
+  showToggleTheme?: boolean;
+  showTwitter?: boolean;
+  showGithub?: boolean;
+  showLanguageSwitcher?: boolean;
 }
 
 const {
-    isSticky = false,
-    showSearch = true,
-    showToggleTheme = true,
-    showTwitter = false,
-    showGithub = false,
-    showLanguageSwitcher = false,
-    logo,
-    menu,
-    ctaButton,
+  isSticky = false,
+  showSearch = true,
+  showToggleTheme = true,
+  showTwitter = false,
+  showGithub = false,
+  showLanguageSwitcher = false,
+  logo,
+  menu,
+  ctaButton,
 } = Astro.props;
 
 const currentLocale = getLang(Astro.url.pathname);
