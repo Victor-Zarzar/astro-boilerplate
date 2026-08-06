@@ -24,6 +24,7 @@
     "clean": "rm -rf dist node_modules .astro",
     "update": "pnpm up",
     "update-latest": "pnpm up --latest",
+    "astro-update": "pnpm dlx @astrojs/upgrade",
     "approve-builds": "pnpm approve-builds"
   },
   "dependencies": {
@@ -33,11 +34,11 @@
     "@astrojs/sitemap": "^3.7.3",
     "@base-ui/react": "^1.7.0",
     "@fontsource-variable/inter": "^5.3.0",
-    "@shadcn/react": "^0.2.1",
+    "@shadcn/react": "^0.3.0",
     "@tailwindcss/vite": "^4.3.3",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
-    "astro": "^7.1.6",
+    "astro": "^7.2.0",
     "astro-auto-import": "^0.5.2",
     "astro-font": "^1.1.0",
     "astro-i18n-aut": "^0.7.3",
@@ -62,7 +63,7 @@
     "recharts": "3.10.1",
     "remark-collapse": "^0.1.2",
     "remark-toc": "^9.0.0",
-    "shadcn": "^4.16.1",
+    "shadcn": "^4.16.2",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.6.0",
     "tailwindcss": "^4.3.3",
@@ -71,6 +72,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
     "@biomejs/biome": "2.5.7",
+    "@iconify-json/tabler": "^1.2.38",
     "drizzle-kit": "^0.31.10",
     "globals": "^17.9.0",
     "typescript": "~7.0.2"

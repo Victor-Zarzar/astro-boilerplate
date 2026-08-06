@@ -1,34 +1,100 @@
 ---
 import { getEntry } from "astro:content";
-import { getLang } from "@/utils/i18n";
+import ImageMod from "@/components/ImageMod.astro";
+import { markdownify } from "@/lib/utils/textConverter";
 
-const cta = await getEntry("sections", "cta");
-const lang = getLang(Astro.url.pathname);
-
-const link = cta.data.button.link;
-const adjustLink = lang === "en" ? link : `${lang}${link}`;
+const call_to_action = await getEntry("sections", "call-to-action");
 ---
 
-{
-    cta.data.enable && (
-        <div class="relative overflow-hidden rounded-3xl bg-dark px-6 py-16 text-center dark:bg-darkmode-dark/5 sm:px-16">
-            <h2 class="text-2xl md:text-3xl lg:text-4xl lg:tracking-tight text-darkmode-dark dark:text-dark">
-                {cta.data[lang].title}
-            </h2>
-            <p class="mx-auto mt-4 max-w-2xl text-lg text-darkmode-dark/70 dark:text-dark/70">
-                {cta.data[lang].description}
-            </p>
-
-            <div class="mt-10 flex justify-center">
-                <a
-                    href={adjustLink}
-                    class="relative flex h-12 items-center justify-center px-8 before:bg-primary before:absolute before:inset-0 before:rounded-full before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max"
+<div class="relative py-16">
+    <div
+        aria-hidden="true"
+        class="pointer-events-none absolute inset-0 h-max w-full m-auto grid grid-cols-2 -space-x-52 opacity-40 dark:opacity-20"
+    >
+        <div
+            class="blur-[106px] h-56 bg-gradient-to-br from-primary to-purple-400 dark:from-blue-700"
+        >
+        </div>
+        <div
+            class="blur-[106px] h-32 bg-gradient-to-r from-cyan-400 to-sky-300 dark:to-indigo-600"
+        >
+        </div>
+    </div>
+    <div class="container">
+        <div class="relative">
+            <div class="flex items-center justify-center -space-x-2">
+                <ImageMod
+                    loading="lazy"
+                    width={400}
+                    height={400}
+                    src="/images/avatars/avatar-shi-xiang-yun.png"
+                    alt="avatar-shi-xiang-yun.png"
+                    class="h-8 w-8 rounded-full object-cover"
+                    format="webp"
+                />
+                <ImageMod
+                    loading="lazy"
+                    width={200}
+                    height={200}
+                    src="/images/avatars/avatar-jia-bao-yu.png"
+                    alt="avatar-jia-bao-yu.png"
+                    class="h-12 w-12 rounded-full object-cover"
+                    format="webp"
+                />
+                <ImageMod
+                    loading="lazy"
+                    width={200}
+                    height={200}
+                    src="/images/avatars/avatar-lin-dai-yu.png"
+                    alt="avatar-lin-dai-yu.png"
+                    class="z-10 h-16 w-16 rounded-full object-cover"
+                    format="webp"
+                />
+                <ImageMod
+                    loading="lazy"
+                    width={200}
+                    height={200}
+                    src="/images/avatars/avatar-xue-bao-chai.png"
+                    alt="avatar-xue-bao-chai.png"
+                    class="relative h-12 w-12 rounded-full object-cover"
+                    format="webp"
+                />
+                <ImageMod
+                    loading="lazy"
+                    width={200}
+                    height={200}
+                    src="/images/avatars/avatar-jia-tan-chun.png"
+                    alt="avatar-jia-tan-chun.png"
+                    class="h-8 w-8 rounded-full object-cover"
+                    format="webp"
+                />
+            </div>
+            <div class="mt-6 m-auto space-y-6 md:w-8/12 lg:w-7/12">
+                <h2
+                    class="text-center text-2xl font-bold text-gray-800 dark:text-white md:text-3xl"
                 >
-                    <span class="relative text-darkmode-dark dark:text-darkmode-dark">
-                        {cta.data[lang].label}
-                    </span>
-                </a>
+                    <Fragment
+                        set:html={markdownify(call_to_action.data.title)}
+                    />
+                </h2>
+                <p
+                    class="text-center text-lg mt-4 text-gray-600 dark:text-gray-300"
+                >
+                    <Fragment
+                        set:html={markdownify(call_to_action.data.description)}
+                    />
+                </p>
+                <div class="flex flex-wrap justify-center pt-6 gap-6">
+                    <a
+                        href={call_to_action.data.button.link}
+                        class="relative flex h-12 w-full items-center justify-center px-8 before:bg-dark dark:before:bg-darkmode-dark before:absolute before:inset-0 before:rounded-full before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max"
+                    >
+                        <span class="relative text-darkmode-dark dark:text-dark"
+                            >{call_to_action.data.button.label}</span
+                        >
+                    </a>
+                </div>
             </div>
         </div>
-    )
-}
+    </div>
+</div>

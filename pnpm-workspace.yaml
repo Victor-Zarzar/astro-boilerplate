@@ -9,7 +9,7 @@ minimumReleaseAgeExclude:
   - lucide-react@1.28.0
   - '@types/react-dom@19.2.4'
   - '@types/react@19.2.18'
-  - shadcn@4.16.1
+  - shadcn@4.16.1 || 4.16.2
   - '@base-ui/react@1.7.0'
   - '@base-ui/utils@0.3.2'
   - '@biomejs/biome@2.5.7'
@@ -21,3 +21,5 @@ minimumReleaseAgeExclude:
   - '@biomejs/cli-linux-x64@2.5.7'
   - '@biomejs/cli-win32-arm64@2.5.7'
   - '@biomejs/cli-win32-x64@2.5.7'
+  - astro@7.2.0
+  - '@shadcn/react@0.3.0'

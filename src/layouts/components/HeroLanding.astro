@@ -9,6 +9,7 @@ const lang = getLang(Astro.url.pathname);
 
 const link1 = hero.data.primaryButton.link;
 const link2 = hero.data.secondaryButton.link;
+
 const adjustLink = lang === "en" ? link1 : `${lang}${link1}`;
 const adjustLink2 = lang === "en" ? link2 : `${lang}${link2}`;
 ---
